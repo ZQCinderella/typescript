@@ -28,6 +28,9 @@ let output1 = identity3('str')
 function logging<T>(args: Array<T>): Array<T> {
     return args
 }
+logging<string>(['a','b']) // ok
+// logging<string>([1,3]) // error  Type 'number' is not assignable to type 'string'.
+
 
 
 // 泛型接口
@@ -54,6 +57,14 @@ console.log(myIdent2('str'))
 class GenericNumber<T> {
     zeroValue: T;
     add: (x: T, y: T) => T;
+    name!: T;   // !: 表示忽略其初始化
+    /**
+     * 如果不写constructor去初始化实例属性或方法，则需要打开"strictPropertyInitialization": false,
+    constructor(zeroValue: T, fn: (x: T, y: T) => T) {
+        this.zeroValue = zeroValue;
+        this.add = fn;
+    }
+     */
 }
 let myGenericNumber = new GenericNumber<number>()
 myGenericNumber.zeroValue = 0
