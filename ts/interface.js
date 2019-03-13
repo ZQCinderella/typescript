@@ -1,3 +1,4 @@
+"use strict";
 // 接口就用做为类型命名
 // 不使用接口
 function printLabel(labelObj) {
@@ -51,7 +52,32 @@ mySearch2 = function (sou, sub) {
 };
 // 函数类型的接口并不检查参数名称是否一致
 console.log(mySearch2('hello kitty', 'kit'));
+function getCounter() {
+    var counter = function (start) {
+        console.log('counterFun', start);
+        return '1234'; // 如果是指定了函数的返回类型，那么函数可以不返回任何内容。但是如果要返回，则必须是指定的类型
+    };
+    counter.interval = 123;
+    counter.reset = function () { console.log('reset'); };
+    return counter;
+}
+var coun = getCounter();
+var ret = coun(10);
+console.log(typeof ret);
+coun.reset();
+//coun.interval = 50
+console.log(coun);
+var Clock = /** @class */ (function () {
+    function Clock(h, m) {
+        this.currentTime = h;
+    }
+    Clock.prototype.setTime = function (d) {
+        this.currentTime = d;
+    };
+    return Clock;
+}());
 var square = {};
 console.log(square);
 square.color = 'white';
 square.sideLength = 10;
+square.penWidth = 20;

@@ -87,6 +87,44 @@ mySearch2 = function(sou: string, sub: string) {
 // 函数类型的接口并不检查参数名称是否一致
 console.log(mySearch2('hello kitty', 'kit'))
 
+
+// 混合类型
+interface Counter {
+  (start: number): string;
+  interval: number;
+  reset(): void;
+}
+function getCounter(): Counter {
+  let counter = <Counter>function (start: number) { 
+    console.log('counterFun', start)
+    return '1234'    // 如果是指定了函数的返回类型，那么函数可以不返回任何内容。但是如果要返回，则必须是指定的类型
+  }
+  counter.interval = 123
+  counter.reset = function () { console.log('reset') }
+  return counter
+}
+let coun = getCounter()
+let ret = coun(10)
+console.log(typeof ret)
+coun.reset()
+//coun.interval = 50
+console.log(coun)
+
+// 实现接口
+interface ClockInterface {
+  currentTime: Date;
+  setTime(d: Date): any;
+}
+class Clock implements ClockInterface {
+  currentTime: Date;
+  setTime (d: Date) {
+    this.currentTime = d
+  }
+  constructor(h: Date, m:number){
+    this.currentTime = h
+  }
+}
+
 // 接口继承
 interface Shape {
   color: string;
@@ -102,4 +140,3 @@ console.log(square)
 square.color = 'white'
 square.sideLength = 10
 square.penWidth = 20
-
